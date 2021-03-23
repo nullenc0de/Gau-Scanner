@@ -15,8 +15,20 @@ kill (){
 recon (){
 banner
 
-#Find gau endpoints and validate 200 code
-echo $1 |gau -subs |qsreplace -a| ffuf -w - -u FUZZ -t 400 -mc 200 -o 200url.csv -of csv
+#remove old files
+rm -rf *.$1
+rm gauscan.txt
+rm scan.raw
+rm 200url.csv
+rm endpoint.txt
+rm rawurl.txt
+
+#Find gau and waybackurl endpoints
+echo $1 |gau -subs |qsreplace -a > rawurl.txt
+echo $1 |waybackurls |qsreplace -a >> rawurl.txt
+
+#validate 200 code
+cat rawurls.txt |qsreplace -a |ffuf -w - -u FUZZ -t 400 -mc 200 -o 200url.csv -of csv
 
 #extract ffuf endpoints 
 cat 200url.csv |cut -d , -f3|qsreplace -a > endpoint.txt
