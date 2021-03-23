@@ -22,6 +22,8 @@ rm scan.raw
 rm 200url.csv
 rm endpoint.txt
 rm rawurl.txt
+rm sql_exploit.sh
+rm possible_sqli.txt
 
 #Find gau and waybackurl endpoints
 echo $1 |gau -subs |qsreplace -a > rawurl.txt
