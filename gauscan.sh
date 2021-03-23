@@ -15,7 +15,7 @@ kill (){
 recon (){
 banner
 
-echo $1 |gau -subs |qsreplace -a| ffuf -w - -u FUZZ -t 400 -ac -mc 200 -o 200url.csv -of csv
+echo $1 |gau -subs |qsreplace -a| ffuf -w - -u FUZZ -t 400 -mc 200 -o 200url.csv -of csv
 cat 200url.csv |cut -d , -f3|qsreplace -a > endpoint.txt
 cat endpoint.txt |grep = |egrep -v ".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)" |qsreplace -a |gf interestingparams |while read url; do injectx.py -u $url -vn ; done |tee scan.raw
 strings scan.raw |grep "Exploit Command" |sort -u |cut -c 9- > gauscan.txt
