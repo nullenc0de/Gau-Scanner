@@ -26,6 +26,7 @@ rm sql_exploit.sh
 rm possible_sqli.txt
 
 #Find gau and waybackurl endpoints
+echo "DUMPING ENDPOINTS SIT TIGHT"
 echo $1 |gau -subs |qsreplace -a > rawurl.txt
 echo $1 |waybackurls |qsreplace -a >> rawurl.txt
 
