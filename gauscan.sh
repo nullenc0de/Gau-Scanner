@@ -63,6 +63,9 @@ find ./ -name 'target.txt' -exec cat {} \; |sort -u > ./possible_sqli.txt
 #delete log file if empty
 find ./ -name 'log'  -size  0 -print -delete
 
+#Remove folders with only 2 files 
+du -a | cut -d/ -f2 | sort | uniq -c | sort -nr |grep 3 |xargs rm -rf
+
 #upload sqlmap findings to slack
 slackcat --channel bugbounty ./possible_sqli.txt
 
