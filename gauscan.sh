@@ -33,8 +33,8 @@ echo $1 |waybackurls |qsreplace -a >> rawurl.txt
 #validate 200 code
 cat rawurl.txt |grep = |egrep -v ".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)" |qsreplace -a |gf interestingparams |ffuf -w - -u FUZZ -t 400 -mc 200,302 -o 200url.csv -of csv
 
-#extract ffuf endpoints 
-cat 200url.csv |cut -d , -f3|qsreplace -a > endpoint.txt
+#extract ffuf endpoints will scan redirected location in ffuf v1.2.1
+#cat 200url.csv |cut -d , -f3|qsreplace -a > endpoint.txt
 
 #extract ffuf endpoints 
 cat 200url.csv |cut -d , -f2|qsreplace -a >> endpoint.txt
