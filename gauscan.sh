@@ -60,6 +60,9 @@ bash ./sql_exploit.sh
 #pull out sqlmap findings
 find ./ -name 'target.txt' -exec cat {} \; |sort -u > ./possible_sqli.txt
 
+#delete log file if empty
+find ./ -name 'log'  -size  0 -print -delete
+
 #upload sqlmap findings to slack
 slackcat --channel bugbounty ./possible_sqli.txt
 
