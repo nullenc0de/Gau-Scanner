@@ -40,7 +40,7 @@ cat 200url.csv |cut -d , -f3|qsreplace -a > endpoint.txt
 cat 200url.csv |cut -d , -f2|qsreplace -a >> endpoint.txt
 
 #find interesting params
-cat endpoint.txt |grep = |egrep -v ".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)" |qsreplace -a |gf interestingparams |while read url; do injectx.py -u $url -vn ; done |tee scan.raw
+cat endpoint.txt |grep = |egrep -v ".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)" |qsreplace -a |gf interestingparams |while read url; do xargs -n 1 -P 20 injectx.py -u $url -vn ; done |tee scan.raw
 
 #convert the binary output to text
 strings scan.raw |grep "Exploit Command" |sort -u |cut -c 9- > gauscan.txt
